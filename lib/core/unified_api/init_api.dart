@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 
-class InitApiAndProccess {
+class InitApiAndProcess {
   String url, baseURL = 'http://scholarlive.404developers.com/';
   Map<String, dynamic> param;
   dynamic token;
   Map<String, String> header;
   String requestName;
-  InitApiAndProccess(
+
+  InitApiAndProcess(
       {@required this.url,
       @required this.param,
       @required this.token,

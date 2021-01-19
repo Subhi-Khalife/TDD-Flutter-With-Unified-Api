@@ -3,15 +3,15 @@
 // import 'package:test_tdd/core/error/failures.dart';
 // import 'package:test_tdd/core/unified_api/init_api.dart';
 // import 'package:http/http.dart'as http;
-
-// class GetApi<T> extends InitApiAndProccess{
-
-
+//
+// class GetApi<T> extends InitApiAndProcess{
+//
+//
 //   String getParam() {
 //     String requestParam = "?";
 //     var keyList = param.keys.toList();
 //     var valuesList = param.values.toList();
-
+//
 //     for (int i = 0; i < keyList.length; i++) {
 //       requestParam = requestParam + keyList[i] + "=" + valuesList[i] + "&";
 //     }
@@ -19,8 +19,8 @@
 //     print(requestParam);
 //     return requestParam;
 //   }
-
-
+//
+//
 //   Future<Either<T,Failure>> makeGetConnection() async {
 //     String passParam = getParam();
 //     try {
