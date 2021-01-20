@@ -23,10 +23,7 @@ class _LoginViewState extends State<LoginView> {
               onPressed: () {
                 BlocProvider.of<LoginBloc>(context)
                   ..add(FetchLoginByPhone(
-                      phone: "+963-959379188",
-                      password: "12345",
-                      useCase: LoginUseEmail(
-                          loginRepository: LoginRepositoryImpl())));
+                      phone: "+963-959379188", password: "12345"));
               },
               child: Text("Login"),
             ),

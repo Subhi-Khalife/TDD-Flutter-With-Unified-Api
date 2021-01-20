@@ -15,9 +15,14 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+
   LoginBloc() : super(LoginInitial());
 
   // LoginUseEmail loginUseEmail;
+
+  final UseCase  loginUseCase = LoginUseEmail(
+                          loginRepository: LoginRepositoryImpl());
+  
 
   @override
   Stream<LoginState> mapEventToState(
@@ -28,8 +33,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield Loading();
   if(event is FetchLoginByPhone )
     { 
-      // LoginUseEmail sa=LoginUseEmail(loginRepository: LoginRepositoryImpl());
-      UseCase loginUseCase = event.useCase;
+   
      yield Loading();
           final failureOrLogin =
               await loginUseCase(LoginParams(
@@ -42,11 +46,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 }
 
 
+
 Stream<LoginState> _eitherLoadedOrErrorState(
     Either<Failure, Login> failureOrTrivia,
   ) async* {
     yield failureOrTrivia.fold(
-      (failure) => Failed(error: "Error Test ..."),
+      (failure){
+      
+      print(failure);
+       return Failed(error: "Error Test ...");
+      },
       (loginObj) => Sucess(login: loginObj),
     );
   }
