@@ -30,8 +30,6 @@ class LoginRemoteDataSource {
       
       if (responce.statusCode == 220) {
         return loginModelFromJson(responce.body);
-      } else {
-        throw TestException();
       }
     } catch (r) {
       throw ServerException();

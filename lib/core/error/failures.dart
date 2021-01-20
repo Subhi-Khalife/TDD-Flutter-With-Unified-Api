@@ -10,5 +10,20 @@ class ServerFailure extends Failure {}
 
 class CacheFailure extends Failure {}
 
+class DataDuplicatesFailure extends Failure {}
 
-class TestError extends Failure{}
+class MissingParamFailure extends Failure {}
+
+class UserNotAllowedToAccessFailure extends Failure {}
+
+class OperationFailedFailure extends Failure {}
+
+class TokenMisMatchFailure extends Failure {}
+
+class DataNotFoundFailure extends Failure {}
+
+class InvalidEmailFailure extends Failure {}
+
+class InvalidPhoneFailure extends Failure {}
+
+class TimeOutFailure extends Failure{}
