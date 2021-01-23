@@ -17,3 +17,5 @@ class DataNotFoundException implements Exception {}
 class InvalidEmailException implements Exception {}
 
 class InvalidPhoneException implements Exception {}
+
+class NotAuthenticatedException implements Exception{}

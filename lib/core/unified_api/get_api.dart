@@ -5,13 +5,18 @@ import 'package:test_tdd/core/error/failures.dart';
 import 'package:http/http.dart' as http;
 import 'package:test_tdd/core/unified_api/init_api_and_proccess.dart';
 
+import '../error/exception.dart';
+
 class GetApi extends InitApiAndProcess {
+
+  Map<String, dynamic> param;
+
   GetApi(
       {@required String url,
-      @required Map<String, dynamic> param,
       @required String token,
-      @required String requestName})
-      : super(param: param, requestName: requestName, token: token, url: url);
+       this.param,
+       String requestName})
+      : super( requestName: requestName, token: token, url: url);
 
   String getParam() {
     String requestParam = "?";
@@ -28,29 +33,36 @@ class GetApi extends InitApiAndProcess {
 
 
   @override
-  Future<Either<Failure, String>> callRequest() async {
+  Future<String> callRequest() async {
     String passParam = getParam();
     try {
-      var response = await http
+      print("The << param >> request $requestName -> $param");
+
+      print("Getting.......");
+
+      final http.Response response = await http
           .get(baseURL + url + passParam, headers: header)
           .timeout(Duration(seconds: 30));
 
-      printStatusCode(response.statusCode);
+      printResponse(response);
 
-  
-      if (response.statusCode == 220) 
-        return Right(response.body);
+
+      if (response.statusCode == 220)
+        return response.body;
       else {
-        Failure failure = getFailerStatus(response.statusCode);
-        return Left(failure);
+        Exception exception = getException(statusCode: response.statusCode);
+
+        throw (exception);
       }
+
     } on TimeoutException catch (e) {
+
       print("TimeoutException Into $requestName");
-      return Left(TimeOutFailure());
-    } catch (e) {
-      print("Error Happened Into $requestName");
-      print("the error is :: $e");
-      return Left(ServerFailure());
+      throw(TimeoutException(e.message));
+
+    } catch (exception) {
+      print("the catch error  is : $exception");
+      throw (exception);
     }
   }
 }

@@ -7,35 +7,25 @@ import 'package:test_tdd/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:test_tdd/features/login/domain/repositories/login_repository.dart';
 
+import '../datasources/login_remote_data_source.dart';
+
 class LoginRepositoryImpl implements LoginRepository {
-  @override
-  Future<List<Login>> getAllPosts() {
-    // TODO: implement getAllPosts
-    throw UnimplementedError();
-  }
+
+  LoginRemoteDataSource loginRemoteDataSource;
 
   @override
-  Future<Either<Failure, Login>> loginUseEmail(
-      {String email, String password}) async {
-    final param = {"phone": email,};
-    Either<Failure, String> loginModel = await PostApi(
-            param: param,
-            requestName: "client/auth/login",
-            token: null,
-            url: "client/auth/login")
-        .callRequest();
+  Future<Either<Failure, Login>> loginUseEmail({Map<String,dynamic> param}) async {
 
-    return loginModel.fold(
-      (failure) => Left(failure),
-      (loginObj) => Right(loginModelFromJson(loginObj).data),
-    );
-   
+    print("Layer 3 : Data  repository=> called loginUseEmail Function implementation  <=");
 
-    // try {
-    //   LoginModel loginModel = await LoginRemoteDataSource.loginEmailRemote(email: email, password: password);
-    //   return right(loginModel.data);
-    // }on ServerException {
-    //   return left(ServerFailure());
-    // }
+
+    loginRemoteDataSource = LoginRemoteDataSource();
+
+    final login = await loginRemoteDataSource.loginByPhoneRemote(param);
+
+    print("Layer 3 : Data  repository=> getting data from data source  <=");
+
+    return login;
+
   }
 }

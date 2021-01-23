@@ -11,18 +11,33 @@ class LoginUseEmail implements UseCase<Login, LoginParams> {
   LoginUseEmail({@required this.loginRepository});
   @override
   Future<Either<Failure, Login>> call(params) async {
-    return await loginRepository.loginUseEmail(
-        email: params.email, password: params.password);
+    print("Layer 2 : Domain  UseCases=> called LoginUseEmail use case  <=");
+
+    final paramLoginJson = params.getParam();
+
+    final fetch = await loginRepository.loginUseEmail(
+      param: paramLoginJson
+    );
+
+    print("Layer 2 : Domain  UseCases=> get Data from repository impl  <=");
+
+    return fetch ;
   }
 }
 
 class LoginParams extends Equatable {
   final String email;
-
   final String password;
 
   LoginParams({@required this.email, @required this.password});
 
   @override
   List<Object> get props => [email, password];
+
+  Map<String , dynamic> getParam(){
+    return {
+      "phone" : email,
+      "password" : password
+    };
+  }
 }

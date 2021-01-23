@@ -1,42 +1,54 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:test_tdd/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:test_tdd/core/unified_api/init_api_and_proccess.dart';
 import 'package:http/http.dart' as http;
 
+import '../error/exception.dart';
+
 class PutApi extends InitApiAndProcess {
+
+  Map<String, dynamic> param;
+
   PutApi(
       {@required String url,
-      @required Map<String, dynamic> param,
-      @required String token,
-      @required String requestName})
-      : super(param: param, requestName: requestName, token: token, url: url);
+      @required this.param,
+        String token,
+        String requestName})
+      : super(requestName: requestName, token: token, url: url);
 
   @override
-  Future<Either<Failure, String>> callRequest() async {
-    print("the test makeAddUpdateDelete param $param header $header  ");
+  Future<String> callRequest() async {
 
     try {
-      var response = await http
-          .post(baseURL + url, headers: header, body: jsonEncode(param))
+
+      print("The << param >> request $requestName -> $param");
+
+      print("Putting.......");
+      final http.Response response = await http
+          .put(baseURL + url, headers: header, body: jsonEncode(param))
           .timeout(Duration(seconds: 30));
-      printStatusCode(response.statusCode);
-      if (response.statusCode == 220)
-        return Right(response.body);
+
+      printResponse(response);
+
+      if (response.statusCode == 240)
+        return response.body;
       else {
-        Failure failure = getFailerStatus(response.statusCode);
-        return Left(failure);
+        Exception exception = getException(statusCode: response.statusCode);
+
+        throw (exception);
       }
+
     } on TimeoutException catch (e) {
+
       print("TimeoutException Into $requestName");
-      return Left(TimeOutFailure());
-    } catch (e) {
-      print("Error Happened Into $requestName");
-      print("the error is :: $e");
-      return Left(ServerFailure());
+      throw(TimeoutException(e.message));
+
+    } catch (exception) {
+      print("the catch error  is : $exception");
+      throw (exception);
     }
   }
 }

@@ -11,6 +11,8 @@ import 'package:test_tdd/features/login/domain/entities/login.dart';
 import 'package:test_tdd/features/login/domain/repositories/login_repository.dart';
 import 'package:test_tdd/features/login/domain/usecases/login_use_email.dart';
 
+import '../../../../../core/error/failures.dart';
+
 part 'login_event.dart';
 part 'login_state.dart';
 
@@ -32,9 +34,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if(event is InitalEvent)
       yield Loading();
   if(event is FetchLoginByPhone )
-    { 
-   
-     yield Loading();
+    {
+      print("Layer 1 : Presentation  Bloc => called event FetchLoginByPhone <=");
+
+      yield Loading();
           final failureOrLogin =
               await loginUseCase(LoginParams(
                 email: event.phone,
@@ -52,10 +55,17 @@ Stream<LoginState> _eitherLoadedOrErrorState(
   ) async* {
     yield failureOrTrivia.fold(
       (failure){
-      
-      print(failure);
+        print("Layer 1 : Presentation  Bloc => get failure from use case and return Failed state <=");
+
+        if(failure is MissingParamFailure)
+          print("MissingParamFailure");
+
        return Failed(error: "Error Test ...");
       },
-      (loginObj) => Sucess(login: loginObj),
+      (loginObj) {
+        print("Layer 1 : Presentation  Bloc => get data from use case and return Success state <=");
+
+        return Sucess(login: loginObj);
+      },
     );
   }

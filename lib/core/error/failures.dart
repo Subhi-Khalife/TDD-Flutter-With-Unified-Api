@@ -27,3 +27,5 @@ class InvalidEmailFailure extends Failure {}
 class InvalidPhoneFailure extends Failure {}
 
 class TimeOutFailure extends Failure{}
+
+class NotAuthenticatedFailure extends Failure{}
