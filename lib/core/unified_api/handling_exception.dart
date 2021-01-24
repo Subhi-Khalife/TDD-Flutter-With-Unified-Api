@@ -5,7 +5,7 @@ import 'package:test_tdd/core/error/exception.dart';
 import 'package:test_tdd/core/error/failures.dart';
 
 
-typedef Future<String> _RequestCall();
+typedef Future<T> _RequestCall<T>();
 
 mixin HandlingExceptionRequest{
 
@@ -33,7 +33,7 @@ mixin HandlingExceptionRequest{
   }
 
 
-  Future<Either<Failure , String>> handlingExceptionRequest(
+  Future<Either<Failure , T>> handlingExceptionRequest<T>(
       {@required _RequestCall requestCall})async{
     try{
       final response = await requestCall();

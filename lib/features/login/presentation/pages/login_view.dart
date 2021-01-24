@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_tdd/features/login/data/repositories/login_repository_impl.dart';
-import 'package:test_tdd/features/login/domain/usecases/login_use_email.dart';
 import 'package:test_tdd/features/login/presentation/bloc/bloc/login_bloc.dart';
 
 class LoginView extends StatefulWidget {
   @override
   _LoginViewState createState() => _LoginViewState();
+
 }
 
 class _LoginViewState extends State<LoginView> {

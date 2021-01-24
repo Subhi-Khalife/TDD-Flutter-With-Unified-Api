@@ -4,18 +4,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:test_tdd/core/unified_api/initial_api.dart';
 import 'package:http/http.dart' as http;
 
-class PostApi extends InitialApi {
-  Map<String, dynamic> param;
+typedef T _FromJson<T>(String body);
 
-  PostApi(
-      {@required String url,
-      @required this.param,
-       String token,
-       String requestName})
-      : super(requestName: requestName, token: token, url: url);
+class PostApi<T> extends InitialApi<T> {
+  Map<String, dynamic> param;
+  _FromJson  fromJson;
+  PostApi({
+        @required String url,
+        @required this.param,
+        @required  this.fromJson,
+        String token,
+        String requestName
+  }) : super(requestName: requestName, token: token, url: url);
 
   @override
-  Future<String> callRequest() async {
+  Future<T> callRequest() async {
     try {
 
       print("The << param >> request $requestName -> $param");
@@ -31,7 +34,7 @@ class PostApi extends InitialApi {
 
 
       if (response.statusCode == 220)
-        return response.body;
+        return fromJson(response.body);
       else {
 
         Exception exception = getException(statusCode: response.statusCode);

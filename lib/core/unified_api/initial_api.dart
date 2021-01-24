@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:test_tdd/core/unified_api/handling_exception.dart';
 import 'package:test_tdd/core/unified_api/printing.dart';
 
-abstract class InitialApi extends Printing with HandlingExceptionRequest {
+abstract class InitialApi<T> extends Printing with HandlingExceptionRequest {
   String url;
   final  String baseURL = 'http://scholarlive.404developers.com/';
   String token;
@@ -20,6 +20,6 @@ abstract class InitialApi extends Printing with HandlingExceptionRequest {
     };
   }
 
-  Future<String> callRequest();
+  Future<T> callRequest();
 }
 

@@ -3,48 +3,36 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:test_tdd/core/unified_api/initial_api.dart';
 
-class GetApi extends InitialApi {
+typedef T _FromJson<T>(String body);
 
-  Map<String, dynamic> param;
+class GetApi<T> extends InitialApi<T> {
 
+  _FromJson fromJson;
   GetApi(
       {@required String url,
       @required String token,
-       this.param,
+      @required this.fromJson,
        @required String requestName})
       : super( requestName: requestName, token: token, url: url);
 
-  String getParam() {
-    String requestParam = "?";
-    var keyList = param.keys.toList();
-    var valuesList = param.values.toList();
-
-    for (int i = 0; i < keyList.length; i++) {
-      requestParam = requestParam + keyList[i] + "=" + valuesList[i].toString + "&";
-    }
-    requestParam = requestParam.substring(0, requestParam.length - 1);
-    print("Param is : $requestParam");
-    return requestParam;
-  }
 
 
   @override
-  Future<String> callRequest() async {
-    String passParam = getParam();
+  Future<T> callRequest() async {
+
     try {
-      print("The << param >> request $requestName -> $param");
 
       print("Getting.......");
 
       final http.Response response = await http
-          .get(baseURL + url + passParam, headers: header)
+          .get(baseURL + url , headers: header)
           .timeout(Duration(seconds: 30));
 
       printResponse(response);
 
 
       if (response.statusCode == 220)
-        return response.body;
+        return fromJson(response.body);
       else {
         Exception exception = getException(statusCode: response.statusCode);
 
@@ -57,3 +45,20 @@ class GetApi extends InitialApi {
     }
   }
 }
+
+//// <<<<--- Please don't clear this function --->>> !!!!!!!!!
+
+// String passParam = getParam();
+
+// String getParam() {
+//   String requestParam = "?";
+//   var keyList = param.keys.toList();
+//   var valuesList = param.values.toList();
+//
+//   for (int i = 0; i < keyList.length; i++) {
+//     requestParam = requestParam + keyList[i] + "=" + valuesList[i].toString + "&";
+//   }
+//   requestParam = requestParam.substring(0, requestParam.length - 1);
+//   print("Param is : $requestParam");
+//   return requestParam;
+// }

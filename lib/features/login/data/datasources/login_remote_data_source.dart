@@ -12,14 +12,15 @@ class LoginRemoteDataSource with HandlingExceptionRequest{
   Future<Either<Failure,User>> loginByPhoneRemote(param) async {
     print("Layer 3 : Data  dataSource => called request from server  <=");
 
-    final  postObject =  PostApi(
+    final  postObject =  PostApi<UserModel>(
         param: param,
         requestName: "LOGIN",
+        fromJson: (s) => loginModelFromJson(s),
         url: "client/auth/login");
 
     final request =postObject.callRequest ;
 
-    final response = await handlingExceptionRequest(
+    final response = await handlingExceptionRequest<UserModel>(
       requestCall:  request
     );
 
@@ -27,6 +28,6 @@ class LoginRemoteDataSource with HandlingExceptionRequest{
 
     return response.fold(
             (failure) => Left(failure),
-            (body) => Right(loginModelFromJson(body).data));
+            (body) => Right(body.data));
   }
 }

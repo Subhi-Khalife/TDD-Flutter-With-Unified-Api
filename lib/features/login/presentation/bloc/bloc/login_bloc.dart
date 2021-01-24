@@ -64,7 +64,6 @@ Stream<LoginState> _eitherLoadedOrErrorState(
       },
       (loginObj) {
         print("Layer 1 : Presentation  Bloc => get data from use case and return Success state <=");
-
         return Success(login: loginObj);
       },
     );
