@@ -1,14 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:test_tdd/core/error/failures.dart';
-import 'package:dartz/dartz.dart';
-import 'package:test_tdd/core/unified_api/init_api_and_proccess.dart';
+import 'package:test_tdd/core/unified_api/initial_api.dart';
 import 'package:http/http.dart' as http;
 
-import '../error/exception.dart';
-
-class PutApi extends InitApiAndProcess {
+class PutApi extends InitialApi {
 
   Map<String, dynamic> param;
 
@@ -40,11 +36,6 @@ class PutApi extends InitApiAndProcess {
 
         throw (exception);
       }
-
-    } on TimeoutException catch (e) {
-
-      print("TimeoutException Into $requestName");
-      throw(TimeoutException(e.message));
 
     } catch (exception) {
       print("the catch error  is : $exception");

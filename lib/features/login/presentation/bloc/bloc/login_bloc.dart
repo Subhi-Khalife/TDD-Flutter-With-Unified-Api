@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:test_tdd/core/error/failures.dart';
 import 'package:test_tdd/core/use_case/use_case.dart';
 import 'package:test_tdd/features/login/data/repositories/login_repository_impl.dart';
-import 'package:test_tdd/features/login/domain/entities/login.dart';
+import 'package:test_tdd/features/login/domain/entities/user.dart';
 import 'package:test_tdd/features/login/domain/repositories/login_repository.dart';
 import 'package:test_tdd/features/login/domain/usecases/login_use_email.dart';
 
@@ -51,7 +51,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
 
 Stream<LoginState> _eitherLoadedOrErrorState(
-    Either<Failure, Login> failureOrTrivia,
+    Either<Failure, User> failureOrTrivia,
   ) async* {
     yield failureOrTrivia.fold(
       (failure){
@@ -65,7 +65,7 @@ Stream<LoginState> _eitherLoadedOrErrorState(
       (loginObj) {
         print("Layer 1 : Presentation  Bloc => get data from use case and return Success state <=");
 
-        return Sucess(login: loginObj);
+        return Success(login: loginObj);
       },
     );
   }

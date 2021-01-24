@@ -11,10 +11,10 @@ class LoginInitial extends LoginState {}
 
 class Loading extends LoginState {}
 
-class Sucess extends LoginState {
-  final Login login ;
+class Success extends LoginState {
+  final User login ;
 
-  Sucess({@required this.login});
+  Success({@required this.login});
 }
 
 class Failed extends LoginState {

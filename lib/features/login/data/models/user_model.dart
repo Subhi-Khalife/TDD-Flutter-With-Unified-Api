@@ -4,26 +4,26 @@
 
 import 'dart:convert';
 
-import 'package:test_tdd/features/login/domain/entities/login.dart';
+import 'package:test_tdd/features/login/domain/entities/user.dart';
 
-LoginModel loginModelFromJson(String str) =>
-    LoginModel.fromJson(json.decode(str));
+UserModel loginModelFromJson(String str) =>
+    UserModel.fromJson(json.decode(str));
 
-String loginModelToJson(LoginModel data) => json.encode(data.toJson());
+String loginModelToJson(UserModel data) => json.encode(data.toJson());
 
-class LoginModel {
-  LoginModel({
+class UserModel {
+  UserModel({
     this.status,
     this.data,
   });
 
   String status;
-  LoginInfoModel data;
+  UserInfoModel data;
 
-  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         status: json["status"] == null ? null : json["status"],
         data:
-            json["data"] == null ? null : LoginInfoModel.fromJson(json["data"]),
+            json["data"] == null ? null : UserInfoModel.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -32,8 +32,8 @@ class LoginModel {
       };
 }
 
-class LoginInfoModel extends Login {
-  LoginInfoModel(
+class UserInfoModel extends User {
+  UserInfoModel(
       {id,
       fullName,
       username,
@@ -61,7 +61,7 @@ class LoginInfoModel extends Login {
             tokenApi: tokenApi,
             userScope: userScope,
             username: username);
-  factory LoginInfoModel.fromJson(Map<String, dynamic> json) => LoginInfoModel(
+  factory UserInfoModel.fromJson(Map<String, dynamic> json) => UserInfoModel(
         id: json["id"] == null ? null : json["id"],
         fullName: json["full_name"] == null ? null : json["full_name"],
         username: json["username"] == null ? null : json["username"],

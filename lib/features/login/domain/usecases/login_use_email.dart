@@ -2,16 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:test_tdd/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:test_tdd/core/use_case/use_case.dart';
-import 'package:test_tdd/features/login/domain/entities/login.dart';
+import 'package:test_tdd/features/login/domain/entities/user.dart';
 import 'package:test_tdd/features/login/domain/repositories/login_repository.dart';
 import 'package:equatable/equatable.dart';
 
-class LoginUseEmail implements UseCase<Login, LoginParams> {
+class LoginUseEmail implements UseCase<User, LoginParams> {
   LoginRepository loginRepository;
+
   LoginUseEmail({@required this.loginRepository});
+
   @override
-  Future<Either<Failure, Login>> call(params) async {
-    print("Layer 2 : Domain  UseCases=> called LoginUseEmail use case  <=");
+  Future<Either<Failure, User>> call(params) async {
+    print("Layer 2 : Domain  UseCases => called LoginUseEmail use case  <=");
 
     final paramLoginJson = params.getParam();
 
@@ -19,7 +21,7 @@ class LoginUseEmail implements UseCase<Login, LoginParams> {
       param: paramLoginJson
     );
 
-    print("Layer 2 : Domain  UseCases=> get Data from repository impl  <=");
+    print("Layer 2 : Domain  UseCases => get Data from repository impl  <=");
 
     return fetch ;
   }

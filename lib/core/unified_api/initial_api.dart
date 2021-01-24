@@ -1,19 +1,18 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:test_tdd/core/unified_api/api_proccess.dart';
+import 'package:test_tdd/core/unified_api/handling_exception.dart';
+import 'package:test_tdd/core/unified_api/printing.dart';
 
-abstract class InitApiAndProcess extends ApiProcess {
+abstract class InitialApi extends Printing with HandlingExceptionRequest {
   String url;
   final  String baseURL = 'http://scholarlive.404developers.com/';
   String token;
-  String requestName;
   Map<String , String> header ;
 
-  InitApiAndProcess(
+  InitialApi(
       {this.token,
         @required this.url,
-        this.requestName})
-      : super(requestName: requestName) {
+        String requestName}) :super (requestName:requestName ) {
         header = {
       HttpHeaders.authorizationHeader: "Bearer $token",
       HttpHeaders.contentTypeHeader: "application/json",
@@ -23,3 +22,4 @@ abstract class InitApiAndProcess extends ApiProcess {
 
   Future<String> callRequest();
 }
+

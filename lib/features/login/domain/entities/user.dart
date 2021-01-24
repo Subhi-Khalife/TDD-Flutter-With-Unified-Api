@@ -1,4 +1,4 @@
-class Login {
+class User {
   int id;
   String fullName;
   String username;
@@ -13,7 +13,7 @@ class Login {
   dynamic createdAt;
   String tokenApi;
 
-  Login(
+  User(
       {this.id,
       this.fullName,
       this.username,

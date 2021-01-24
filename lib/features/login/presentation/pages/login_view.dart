@@ -36,7 +36,7 @@ class _LoginViewState extends State<LoginView> {
               builder: (context, state) {
                 if (state is Loading)
                   return CircularProgressIndicator();
-                else if (state is Sucess) {
+                else if (state is Success) {
                   print("Layer 1 : Presentation  Pages => Success state done and data in the house  <=");
 
                   return Text("user name : ${state.login.username}");

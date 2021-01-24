@@ -1,34 +1,32 @@
 import 'package:dartz/dartz.dart';
 import 'package:test_tdd/core/error/failures.dart';
-import 'package:test_tdd/features/login/data/models/login_model.dart';
+import 'package:test_tdd/core/unified_api/handling_exception.dart';
+import 'package:test_tdd/features/login/data/models/user_model.dart';
 import '../../../../core/error/failures.dart';
-import '../../../../core/unified_api/api_proccess.dart';
 import '../../../../core/unified_api/post_api.dart';
-import '../../domain/entities/login.dart';
-import '../models/login_model.dart';
+import '../../domain/entities/user.dart';
+import '../models/user_model.dart';
 
-class LoginRemoteDataSource extends ApiProcess{
-  Future<Either<Failure,Login>> loginByPhoneRemote(param) async {
+class LoginRemoteDataSource with HandlingExceptionRequest{
 
+  Future<Either<Failure,User>> loginByPhoneRemote(param) async {
     print("Layer 3 : Data  dataSource => called request from server  <=");
 
-    final request = PostApi(
-                      param: param,
-                      requestName: "LOGIN",
-                      url: "client/auth/login")
-                      .callRequest ;
+    final  postObject =  PostApi(
+        param: param,
+        requestName: "LOGIN",
+        url: "client/auth/login");
 
-    final response = await handlingRequest(
+    final request =postObject.callRequest ;
+
+    final response = await handlingExceptionRequest(
       requestCall:  request
     );
 
     print("Layer 3 : Data  dataSource => return response to  repository impl <=");
 
-
     return response.fold(
             (failure) => Left(failure),
             (body) => Right(loginModelFromJson(body).data));
-
   }
-
 }
