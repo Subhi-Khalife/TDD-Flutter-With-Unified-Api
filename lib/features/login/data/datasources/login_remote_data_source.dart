@@ -15,7 +15,7 @@ class LoginRemoteDataSource with HandlingExceptionRequest{
     final  postObject =  PostApi<UserModel>(
         param: param,
         requestName: "LOGIN",
-        fromJson: (s) => loginModelFromJson(s),
+        fromJson: loginModelFromJson,
         url: "client/auth/login");
 
     final request =postObject.callRequest ;
