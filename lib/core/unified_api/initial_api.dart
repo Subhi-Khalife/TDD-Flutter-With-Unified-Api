@@ -20,6 +20,6 @@ abstract class InitialApi<T> extends Printing with HandlingExceptionRequest {
     };
   }
 
-  Future<T> callRequest();
+  Future<T> call();
 }
 

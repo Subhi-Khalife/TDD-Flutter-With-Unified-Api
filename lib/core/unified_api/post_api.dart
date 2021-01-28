@@ -18,7 +18,7 @@ class PostApi<T> extends InitialApi<T> {
   }) : super(requestName: requestName, token: token, url: url);
 
   @override
-  Future<T> callRequest() async {
+  Future<T> call() async {
     try {
 
       print("The << param >> request $requestName -> $param");

@@ -18,7 +18,7 @@ class GetApi<T> extends InitialApi<T> {
 
 
   @override
-  Future<T> callRequest() async {
+  Future<T> call() async {
 
     try {
 
